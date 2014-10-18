@@ -12,13 +12,15 @@ class Media {
 
   init(songName:String){
     self.songName = songName
+    owners = []
     
   }
 
- init(songName:String, owner: MCPeerID){
-    
+  init(songName:String, owner: MCPeerID){
+    self.songName = songName
+    owners = [owner]
   
-  }
+    }
   
   func appendToOwner(owner: MCPeerID){
     

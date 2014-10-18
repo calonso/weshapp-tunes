@@ -1,21 +1,43 @@
-//
-//  SongTVC.swift
-//  WeshApp-tunes
-//
-//  Created by z.kakabadze on 18/10/2014.
-//  Copyright (c) 2014 Foot Clan. All rights reserved.
-//
-
 import UIKit
+import  MultipeerConnectivity
 
 class SongTVC: UITableViewController {
 
+    var manager: MCManager?
+    var mediaDict: Dictionary <String, Media>?
+    var popDict: Dictionary<String, Int>?
   
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-      
+      super.viewDidLoad()
+      mediaDict = Dictionary()
+      popDict = Dictionary()
+      manager = MCManager(displayName: UIDevice.currentDevice().name)
+      manager!.delegate = self
+      manager?.startAdvertising(true)
+      manager?.startBrowsing()
+    
     }
+  
+  func updateMediaDictionary(SongList: [String], peerID: MCPeerID){
+    for sng in SongList{
+      
+      if let media: Media = mediaDict![sng]{
+        media.appendToOwner(peerID)
+        
+      }else{
+     
+        mediaDict![sng] = Media(songName: sng, owner: peerID)
+      }
+   }
+   println(mediaDict!.count)
+    var mainQueue = NSOperationQueue.mainQueue()
+    mainQueue.addOperationWithBlock() {
+   
+   self.tableView.reloadData()
+   }
+    let keyArray: [String] = Array(mediaDict!.keys)
+    let media = mediaDict![keyArray[0]]
+  }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -27,20 +49,24 @@ class SongTVC: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        return mediaDict!.count
     }
 
   
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
-
-
+      
+      
+        let keyArray: [String] = Array(mediaDict!.keys)
+        let media = mediaDict![keyArray[indexPath.row]]
+      
+        cell.textLabel!.text = media!.songName!      
         return cell
     }
   

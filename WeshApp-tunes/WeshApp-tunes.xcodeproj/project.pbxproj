@@ -17,6 +17,7 @@
 		B37DE9D719F2B500005F3542 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B37DE9D619F2B500005F3542 /* MultipeerConnectivity.framework */; };
 		B37DE9D919F2B79A005F3542 /* SongTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9D819F2B79A005F3542 /* SongTVC.swift */; };
 		B37DE9DB19F2B9A2005F3542 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9DA19F2B9A2005F3542 /* Media.swift */; };
+		B37DE9DD19F2C7B6005F3542 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9DC19F2C7B6005F3542 /* MediaManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		B37DE9D619F2B500005F3542 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		B37DE9D819F2B79A005F3542 /* SongTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTVC.swift; sourceTree = "<group>"; };
 		B37DE9DA19F2B9A2005F3542 /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		B37DE9DC19F2C7B6005F3542 /* MediaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,10 +70,10 @@
 		B37DE9A319F2A151005F3542 = {
 			isa = PBXGroup;
 			children = (
-				B37DE9D619F2B500005F3542 /* MultipeerConnectivity.framework */,
 				B37DE9AE19F2A151005F3542 /* WeshApp-tunes */,
 				B37DE9C719F2A151005F3542 /* WeshApp-tunesTests */,
 				B37DE9AD19F2A151005F3542 /* Products */,
+				B37DE9D619F2B500005F3542 /* MultipeerConnectivity.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,6 +93,7 @@
 				B37DE9D819F2B79A005F3542 /* SongTVC.swift */,
 				B37DE9D419F2B4DC005F3542 /* MCManager.swift */,
 				B37DE9DA19F2B9A2005F3542 /* Media.swift */,
+				B37DE9DC19F2C7B6005F3542 /* MediaManager.swift */,
 				B37DE9B819F2A151005F3542 /* Main.storyboard */,
 				B37DE9BB19F2A151005F3542 /* Images.xcassets */,
 				B37DE9BD19F2A151005F3542 /* LaunchScreen.xib */,
@@ -229,6 +232,7 @@
 				B37DE9B519F2A151005F3542 /* WeshApp_tunes.xcdatamodeld in Sources */,
 				B37DE9B219F2A151005F3542 /* AppDelegate.swift in Sources */,
 				B37DE9D919F2B79A005F3542 /* SongTVC.swift in Sources */,
+				B37DE9DD19F2C7B6005F3542 /* MediaManager.swift in Sources */,
 				B37DE9DB19F2B9A2005F3542 /* Media.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

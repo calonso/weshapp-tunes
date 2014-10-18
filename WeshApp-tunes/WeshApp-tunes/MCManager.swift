@@ -10,7 +10,7 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
   var browser: MCNearbyServiceBrowser?
   var advertiser:  MCNearbyServiceAdvertiser?
   var hasPeers: Bool?
-  
+  var delegate:SongTVC?
   
   
   init(displayName: String){
@@ -26,45 +26,29 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
   /*
   *Send Media List
   */
-  func sendMediaList(sngList: [String]){
-    
-    
-    //var msg = msg.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-    //println(msg.count)
-    
+  func sendMediaList(sngList: NSArray){
+  
+    //println("sending \(sngList)")
     var data: NSData = NSKeyedArchiver.archivedDataWithRootObject(sngList)
-    
-    
-    
-    println("Sending NSData of size \(data.length)")
-    
-    
-    
-    
-    
-    //var msg: AnyObject = NSKeyedUnarchiver.unarchiveObjectWithData(data)!
-    
-    //var array: Array<MPMediaItem> = msg as Array
-    //var array: [String] = msg as [String]
-    //println(array[0])
     
     var error : NSError?
     var success = self.session?.sendData(data,
-      toPeers: self.session?.connectedPeers,
-      withMode: MCSessionSendDataMode.Reliable,
-      error: &error)
+                                      toPeers: self.session?.connectedPeers,
+                                     withMode: MCSessionSendDataMode.Reliable,
+                                        error: &error)
     
-    println(success!)
     
     if error != nil {
       print("Error sending data: \(error?.localizedDescription)")
     }
   }
-  /*
-   * Send a Selected Song name to Peer
-   */
+  
+ /*
+  * Send a Selected Song name to Peer
+  */
   func sendSong(sng: String, peerID: MCPeerID){
-    var data: NSData = NSKeyedArchiver.archivedDataWithRootObject(sng)
+    
+    var data = sng.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
     var error : NSError?
     var success = self.session?.sendData(data,
                                         toPeers: [peerID],
@@ -103,37 +87,61 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
     peer peerID: MCPeerID!,
     didChangeState state: MCSessionState) {
       
-      if(state.toRaw() == 2){
-        browser?.stopBrowsingForPeers()
-        println("\(peerID.displayName) is \(state)")
-        self.hasPeers = true
+      switch state {
+        case MCSessionState.NotConnected:
+           self.hasPeers = false
         
+        case MCSessionState.Connecting:
+            println("\(self.peerID!.displayName) connecting to \(peerID.displayName)")
         
+        case MCSessionState.Connected:
         
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.postNotificationName( "MCDidReceiveConnectionNotification", object: nil)
-        
-        
-      }else if(state.toRaw() == 0){
-        
-        self.hasPeers = false
-        
+          browser!.stopBrowsingForPeers()
+          println("\(self.peerID!.displayName) is connected to \(peerID.displayName)")
+          self.hasPeers = true
+          
+          self.sendMediaList(MediaManager.getMedia())
+ 
+          var mainQueue = NSOperationQueue.mainQueue()
+          mainQueue.addOperationWithBlock() { 
+          
+            println("posting")
+            let notificationCenter = NSNotificationCenter.defaultCenter()
+            notificationCenter.postNotificationName( "connection", object: nil)
+
+          }
       }
-      
+
+     
       
       
   }
   
   func session(     session: MCSession!,
-    didReceiveData data: NSData!,
-    fromPeer peerID: MCPeerID!) {
-      
-      
+        didReceiveData data: NSData!,
+            fromPeer peerID: MCPeerID!) {
+ 
+          var msg: AnyObject = NSKeyedUnarchiver.unarchiveObjectWithData(data)!
+          var songList: Array<String> = msg as Array<String>
+                  //println("Data received \(songList)")
+           var mainQueue = NSOperationQueue.mainQueue()
+          mainQueue.addOperationWithBlock() {
+                self.delegate!.updateMediaDictionary(songList, peerID: peerID)
+          }
+    
+    /*
+    
       var dict: Dictionary = [ "data": data, "peerID": peerID ]
+    
+    var mainQueue = NSOperationQueue.mainQueue()
+    mainQueue.addOperationWithBlock() {
       let notificationCenter = NSNotificationCenter.defaultCenter()
+      
       notificationCenter.postNotificationName( "MCDidReceiveDataNotification", object: nil, userInfo: dict)
+      }
+  */
   }
-  
+
   func session(                          session: MCSession!,
     didStartReceivingResourceWithName resourceName: String!,
     fromPeer peerID: MCPeerID!,
@@ -167,7 +175,7 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
     if(shouldAdvertise){
       advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
       advertiser?.startAdvertisingPeer()
-      println("\(peerID!.displayName) advertising started")
+      //println("\(peerID!.displayName) advertising started")
     }
     else{
       advertiser?.stopAdvertisingPeer()
@@ -180,7 +188,7 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
     withContext context: NSData!,
     invitationHandler: ((Bool, MCSession!) -> Void)!){
       
-      println("received invitation from:\(peerID!.displayName) ")
+      //println("received invitation from:\(peerID!.displayName) ")
       invitationHandler(true, session)
       
       
@@ -199,7 +207,7 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
     browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
     browser?.delegate = self
     browser?.startBrowsingForPeers()
-    println("\(peerID!.displayName) is browsing")
+    //println("\(peerID!.displayName) is browsing")
     
   }
   
@@ -212,7 +220,7 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
       //Add discovred peer to a session
       browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: -1)
       
-      println("peer \(peerID!.displayName) invited to a session.")
+      //println("peer \(peerID!.displayName) invited to a session.")
     }
     else{
       println("peer  \(peerID!.displayName) is already connected")
