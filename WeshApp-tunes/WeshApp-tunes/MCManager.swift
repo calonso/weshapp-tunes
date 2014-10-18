@@ -30,7 +30,6 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
   
     //println("sending \(sngList)")
     var data: NSData = NSKeyedArchiver.archivedDataWithRootObject(sngList)
-    
     var error : NSError?
     var success = self.session?.sendData(data,
                                       toPeers: self.session?.connectedPeers,
@@ -59,23 +58,12 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
     }
   }
   
-  
-
-  
-  
   func connected(p: MCPeerID)->Bool{
-    
     var peerNames = session!.connectedPeers.filter({peer in peer.displayName == p.displayName})
-    
-    
     return peerNames.count > 1
   }
-  
-  
-  
-  ////////////// SESSION ///////////////////////
+   ////////////// SESSION ///////////////////////
   private func startSession(peerID: MCPeerID){
-    
     session = MCSession(peer: peerID)
     session?.delegate = self
   }
@@ -105,7 +93,6 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
           var mainQueue = NSOperationQueue.mainQueue()
           mainQueue.addOperationWithBlock() { 
           
-            println("posting")
             let notificationCenter = NSNotificationCenter.defaultCenter()
             notificationCenter.postNotificationName( "connection", object: nil)
 

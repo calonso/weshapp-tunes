@@ -14,7 +14,19 @@ class MediaManager{
     var arrayList = query.items as Array<MPMediaItem>
     
     return arrayList.map{
-      (m:MPMediaItem) in m.valueForProperty(MPMediaItemPropertyTitle) as String
+      (m: MPMediaItem) in
+      
+    
+      let song = m.valueForProperty(MPMediaItemPropertyTitle) as String
+   
+        if let artist = m.valueForKeyPath(MPMediaItemPropertyArtist) as String? {
+           return "\(song)&\(artist)"
+      }
+      else{
+          
+          return song
+      }
+      
     }
 
     
@@ -26,3 +38,13 @@ class MediaManager{
   
 }
 
+/*
+return arrayList.map{
+(m:MPMediaItem)-> (String, String) in
+
+let song = m.valueForProperty(MPMediaItemPropertyTitle) as String
+let artist = m.valueForKeyPath(MPMediaItemPropertyArtist) as String
+return (song,artist)
+}
+
+*/

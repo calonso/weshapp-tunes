@@ -18,6 +18,7 @@
 		B37DE9D919F2B79A005F3542 /* SongTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9D819F2B79A005F3542 /* SongTVC.swift */; };
 		B37DE9DB19F2B9A2005F3542 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9DA19F2B9A2005F3542 /* Media.swift */; };
 		B37DE9DD19F2C7B6005F3542 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9DC19F2C7B6005F3542 /* MediaManager.swift */; };
+		B3E6ADC119F31EA8009C2418 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E6ADC019F31EA8009C2418 /* PlayerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		B37DE9D819F2B79A005F3542 /* SongTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTVC.swift; sourceTree = "<group>"; };
 		B37DE9DA19F2B9A2005F3542 /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		B37DE9DC19F2C7B6005F3542 /* MediaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
+		B3E6ADC019F31EA8009C2418 /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			children = (
 				B37DE9B119F2A151005F3542 /* AppDelegate.swift */,
 				B37DE9D819F2B79A005F3542 /* SongTVC.swift */,
+				B3E6ADC019F31EA8009C2418 /* PlayerViewController.swift */,
 				B37DE9D419F2B4DC005F3542 /* MCManager.swift */,
 				B37DE9DA19F2B9A2005F3542 /* Media.swift */,
 				B37DE9DC19F2C7B6005F3542 /* MediaManager.swift */,
@@ -231,6 +234,7 @@
 				B37DE9D519F2B4DC005F3542 /* MCManager.swift in Sources */,
 				B37DE9B519F2A151005F3542 /* WeshApp_tunes.xcdatamodeld in Sources */,
 				B37DE9B219F2A151005F3542 /* AppDelegate.swift in Sources */,
+				B3E6ADC119F31EA8009C2418 /* PlayerViewController.swift in Sources */,
 				B37DE9D919F2B79A005F3542 /* SongTVC.swift in Sources */,
 				B37DE9DD19F2C7B6005F3542 /* MediaManager.swift in Sources */,
 				B37DE9DB19F2B9A2005F3542 /* Media.swift in Sources */,
@@ -427,6 +431,7 @@
 				B37DE9D019F2A151005F3542 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B37DE9D119F2A151005F3542 /* Build configuration list for PBXNativeTarget "WeshApp-tunesTests" */ = {
 			isa = XCConfigurationList;
@@ -435,6 +440,7 @@
 				B37DE9D319F2A151005F3542 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
