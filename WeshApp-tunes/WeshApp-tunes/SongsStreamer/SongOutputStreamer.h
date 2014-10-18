@@ -1,5 +1,5 @@
 //
-//  ObjSong.h
+//  SongOutputStreamer.h
 //  WeshApp-tunes
 //
 //  Created by Carlos Alonso on 18/10/2014.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ObjSong : NSObject
+@interface SongOutputStreamer : NSObject
 
 @end
