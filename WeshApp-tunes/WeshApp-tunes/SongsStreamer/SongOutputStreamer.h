@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SongOutputStreamer : NSObject
+@interface SongOutputStreamer : NSObject <NSStreamDelegate>
 
 @end
