@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5E0292D819F2D65B00F15837 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E0292D719F2D65B00F15837 /* AVFoundation.framework */; };
-		5E0292E019F2D66F00F15837 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0292DB19F2D66F00F15837 /* Song.swift */; };
-		5E0292E119F2D66F00F15837 /* SongPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0292DD19F2D66F00F15837 /* SongPlayer.m */; };
-		5E0292E419F2E42900F15837 /* StreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0292E319F2E42900F15837 /* StreamParser.m */; };
 		5E0292E819F2FCDF00F15837 /* SongOutputStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0292E719F2FCDF00F15837 /* SongOutputStreamer.m */; };
+		5E0292EB19F301DB00F15837 /* SongInputStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0292EA19F301DB00F15837 /* SongInputStreamer.m */; };
+		5E0292F919F3077500F15837 /* AudioBuffersQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0292F819F3077500F15837 /* AudioBuffersQueue.m */; };
+		5E02930219F3144400F15837 /* WeshAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E02930119F3144400F15837 /* WeshAudioBuffer.m */; };
 		B37DE9B219F2A151005F3542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9B119F2A151005F3542 /* AppDelegate.swift */; };
 		B37DE9B519F2A151005F3542 /* WeshApp_tunes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9B319F2A151005F3542 /* WeshApp_tunes.xcdatamodeld */; };
 		B37DE9BA19F2A151005F3542 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B37DE9B819F2A151005F3542 /* Main.storyboard */; };
@@ -36,14 +36,15 @@
 
 /* Begin PBXFileReference section */
 		5E0292D719F2D65B00F15837 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		5E0292DB19F2D66F00F15837 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
-		5E0292DC19F2D66F00F15837 /* SongPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongPlayer.h; sourceTree = "<group>"; };
-		5E0292DD19F2D66F00F15837 /* SongPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongPlayer.m; sourceTree = "<group>"; };
 		5E0292DE19F2D66F00F15837 /* WeshApp-tunes-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeshApp-tunes-Bridging-Header.h"; sourceTree = "<group>"; };
-		5E0292E219F2E42900F15837 /* StreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamParser.h; sourceTree = "<group>"; };
-		5E0292E319F2E42900F15837 /* StreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamParser.m; sourceTree = "<group>"; };
 		5E0292E619F2FCDF00F15837 /* SongOutputStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongOutputStreamer.h; sourceTree = "<group>"; };
 		5E0292E719F2FCDF00F15837 /* SongOutputStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongOutputStreamer.m; sourceTree = "<group>"; };
+		5E0292E919F301DB00F15837 /* SongInputStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongInputStreamer.h; sourceTree = "<group>"; };
+		5E0292EA19F301DB00F15837 /* SongInputStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongInputStreamer.m; sourceTree = "<group>"; };
+		5E0292F719F3077500F15837 /* AudioBuffersQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBuffersQueue.h; sourceTree = "<group>"; };
+		5E0292F819F3077500F15837 /* AudioBuffersQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBuffersQueue.m; sourceTree = "<group>"; };
+		5E02930019F3144400F15837 /* WeshAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeshAudioBuffer.h; sourceTree = "<group>"; };
+		5E02930119F3144400F15837 /* WeshAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeshAudioBuffer.m; sourceTree = "<group>"; };
 		B37DE9AC19F2A151005F3542 /* WeshApp-tunes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WeshApp-tunes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37DE9B019F2A151005F3542 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B37DE9B119F2A151005F3542 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,10 +84,24 @@
 		5E0292E519F2FCCF00F15837 /* SongsStreamer */ = {
 			isa = PBXGroup;
 			children = (
+				5E0292F619F3076A00F15837 /* AudioBuffersQueue */,
 				5E0292E619F2FCDF00F15837 /* SongOutputStreamer.h */,
 				5E0292E719F2FCDF00F15837 /* SongOutputStreamer.m */,
+				5E0292E919F301DB00F15837 /* SongInputStreamer.h */,
+				5E0292EA19F301DB00F15837 /* SongInputStreamer.m */,
 			);
 			path = SongsStreamer;
+			sourceTree = "<group>";
+		};
+		5E0292F619F3076A00F15837 /* AudioBuffersQueue */ = {
+			isa = PBXGroup;
+			children = (
+				5E0292F719F3077500F15837 /* AudioBuffersQueue.h */,
+				5E0292F819F3077500F15837 /* AudioBuffersQueue.m */,
+				5E02930019F3144400F15837 /* WeshAudioBuffer.h */,
+				5E02930119F3144400F15837 /* WeshAudioBuffer.m */,
+			);
+			path = AudioBuffersQueue;
 			sourceTree = "<group>";
 		};
 		B37DE9A319F2A151005F3542 = {
@@ -113,9 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				5E0292E519F2FCCF00F15837 /* SongsStreamer */,
-				5E0292DB19F2D66F00F15837 /* Song.swift */,
-				5E0292DC19F2D66F00F15837 /* SongPlayer.h */,
-				5E0292DD19F2D66F00F15837 /* SongPlayer.m */,
 				5E0292DE19F2D66F00F15837 /* WeshApp-tunes-Bridging-Header.h */,
 				B37DE9B119F2A151005F3542 /* AppDelegate.swift */,
 				B37DE9D819F2B79A005F3542 /* SongTVC.swift */,
@@ -126,8 +138,6 @@
 				B37DE9BD19F2A151005F3542 /* LaunchScreen.xib */,
 				B37DE9B319F2A151005F3542 /* WeshApp_tunes.xcdatamodeld */,
 				B37DE9AF19F2A151005F3542 /* Supporting Files */,
-				5E0292E219F2E42900F15837 /* StreamParser.h */,
-				5E0292E319F2E42900F15837 /* StreamParser.m */,
 			);
 			path = "WeshApp-tunes";
 			sourceTree = "<group>";
@@ -257,14 +267,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E0292E419F2E42900F15837 /* StreamParser.m in Sources */,
-				5E0292E019F2D66F00F15837 /* Song.swift in Sources */,
 				B37DE9D519F2B4DC005F3542 /* MCManager.swift in Sources */,
 				B37DE9B519F2A151005F3542 /* WeshApp_tunes.xcdatamodeld in Sources */,
+				5E0292F919F3077500F15837 /* AudioBuffersQueue.m in Sources */,
 				5E0292E819F2FCDF00F15837 /* SongOutputStreamer.m in Sources */,
-				5E0292E119F2D66F00F15837 /* SongPlayer.m in Sources */,
+				5E0292EB19F301DB00F15837 /* SongInputStreamer.m in Sources */,
 				B37DE9B219F2A151005F3542 /* AppDelegate.swift in Sources */,
 				B37DE9D919F2B79A005F3542 /* SongTVC.swift in Sources */,
+				5E02930219F3144400F15837 /* WeshAudioBuffer.m in Sources */,
 				B37DE9DB19F2B9A2005F3542 /* Media.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
