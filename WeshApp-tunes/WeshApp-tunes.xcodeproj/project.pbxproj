@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		B37DE9B219F2A151005F3542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9B119F2A151005F3542 /* AppDelegate.swift */; };
 		B37DE9B519F2A151005F3542 /* WeshApp_tunes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9B319F2A151005F3542 /* WeshApp_tunes.xcdatamodeld */; };
-		B37DE9B719F2A151005F3542 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9B619F2A151005F3542 /* ViewController.swift */; };
 		B37DE9BA19F2A151005F3542 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B37DE9B819F2A151005F3542 /* Main.storyboard */; };
 		B37DE9BC19F2A151005F3542 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B37DE9BB19F2A151005F3542 /* Images.xcassets */; };
 		B37DE9BF19F2A151005F3542 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B37DE9BD19F2A151005F3542 /* LaunchScreen.xib */; };
 		B37DE9CB19F2A151005F3542 /* WeshApp_tunesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9CA19F2A151005F3542 /* WeshApp_tunesTests.swift */; };
+		B37DE9D519F2B4DC005F3542 /* MCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9D419F2B4DC005F3542 /* MCManager.swift */; };
+		B37DE9D719F2B500005F3542 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B37DE9D619F2B500005F3542 /* MultipeerConnectivity.framework */; };
+		B37DE9D919F2B79A005F3542 /* SongTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9D819F2B79A005F3542 /* SongTVC.swift */; };
+		B37DE9DB19F2B9A2005F3542 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9DA19F2B9A2005F3542 /* Media.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,13 +34,16 @@
 		B37DE9B019F2A151005F3542 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B37DE9B119F2A151005F3542 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B37DE9B419F2A151005F3542 /* WeshApp_tunes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WeshApp_tunes.xcdatamodel; sourceTree = "<group>"; };
-		B37DE9B619F2A151005F3542 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B37DE9B919F2A151005F3542 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B37DE9BB19F2A151005F3542 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B37DE9BE19F2A151005F3542 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		B37DE9C419F2A151005F3542 /* WeshApp-tunesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WeshApp-tunesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37DE9C919F2A151005F3542 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B37DE9CA19F2A151005F3542 /* WeshApp_tunesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeshApp_tunesTests.swift; sourceTree = "<group>"; };
+		B37DE9D419F2B4DC005F3542 /* MCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCManager.swift; sourceTree = "<group>"; };
+		B37DE9D619F2B500005F3542 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
+		B37DE9D819F2B79A005F3542 /* SongTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTVC.swift; sourceTree = "<group>"; };
+		B37DE9DA19F2B9A2005F3542 /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B37DE9D719F2B500005F3542 /* MultipeerConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +68,7 @@
 		B37DE9A319F2A151005F3542 = {
 			isa = PBXGroup;
 			children = (
+				B37DE9D619F2B500005F3542 /* MultipeerConnectivity.framework */,
 				B37DE9AE19F2A151005F3542 /* WeshApp-tunes */,
 				B37DE9C719F2A151005F3542 /* WeshApp-tunesTests */,
 				B37DE9AD19F2A151005F3542 /* Products */,
@@ -80,7 +88,9 @@
 			isa = PBXGroup;
 			children = (
 				B37DE9B119F2A151005F3542 /* AppDelegate.swift */,
-				B37DE9B619F2A151005F3542 /* ViewController.swift */,
+				B37DE9D819F2B79A005F3542 /* SongTVC.swift */,
+				B37DE9D419F2B4DC005F3542 /* MCManager.swift */,
+				B37DE9DA19F2B9A2005F3542 /* Media.swift */,
 				B37DE9B819F2A151005F3542 /* Main.storyboard */,
 				B37DE9BB19F2A151005F3542 /* Images.xcassets */,
 				B37DE9BD19F2A151005F3542 /* LaunchScreen.xib */,
@@ -215,9 +225,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B37DE9B719F2A151005F3542 /* ViewController.swift in Sources */,
+				B37DE9D519F2B4DC005F3542 /* MCManager.swift in Sources */,
 				B37DE9B519F2A151005F3542 /* WeshApp_tunes.xcdatamodeld in Sources */,
 				B37DE9B219F2A151005F3542 /* AppDelegate.swift in Sources */,
+				B37DE9D919F2B79A005F3542 /* SongTVC.swift in Sources */,
+				B37DE9DB19F2B9A2005F3542 /* Media.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
