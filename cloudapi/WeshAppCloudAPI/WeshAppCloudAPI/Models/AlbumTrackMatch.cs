@@ -11,5 +11,7 @@ namespace WeshAppCloudAPI.Models
         public string TrackNameSearch;
         public string AlbumCoverURLResult;
         public string AlbumCoverBase64Result;
+        public string RdioEmbedURL;
+        public int RequestCount = 1;
     }
 }

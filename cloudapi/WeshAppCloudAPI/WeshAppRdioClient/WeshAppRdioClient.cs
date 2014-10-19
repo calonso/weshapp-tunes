@@ -20,9 +20,10 @@ namespace WeshAppRdioClient
             _client = new RdioClient(new OAuth.Consumer(key, secret));
         }
 
-        public string getAlbumURL(string artistName, string trackName)
+        public bool getAlbumURL(string artistName, string trackName, out string albumImageURL, out string embedURL)
         {
-            string albumURL = string.Empty;
+            albumImageURL = string.Empty;
+            embedURL = string.Empty;
 
             Dictionary<string, string> parameters = new Dictionary<string,string>();
             parameters["query"] = string.Format("{0}", trackName);
@@ -36,7 +37,9 @@ namespace WeshAppRdioClient
                 {
                     JObject response = JObject.Parse(jsonResult);
                     var match = response["result"]["results"][0];
-                    albumURL = (string)match["icon400"];
+                    albumImageURL = (string)match["icon400"];
+                    embedURL = (string)match["embedUrl"];
+                    return true;
                 }
             }
             catch 
@@ -44,7 +47,7 @@ namespace WeshAppRdioClient
                 //Oh nooos, eat the exception
             }
 
-            return albumURL;
+            return false;
         }
     }
 }
