@@ -10,7 +10,7 @@ namespace WeshAppCloudAPI.Models
         //song name, artist name
         public static Dictionary<string, string> Data = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            { "So Deep", "Keisza"},
+            { "So Deep", "Kiesza"},
             { "Peanut Butter", "Alison Valentine"},
             { "Ice Cream Truck", "Sundrenched"},
             { "In The Shade", "Adultrock" },

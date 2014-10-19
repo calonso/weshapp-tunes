@@ -39,17 +39,7 @@ namespace WeshAppCloudAPI.Controllers
         //Just like it says on the tin...
         public ActionResult GetTopTenTracks(bool json = false)
         {
-            IEnumerable<AlbumTrackMatch> results = new List<AlbumTrackMatch>();
-
-            if(MatchRepository.Repository.Count > 0)
-            {
-                results = MatchRepository.Repository
-                    .OrderByDescending(match => match.Value.RequestCount)
-                    .OrderBy(match => match.Value.TrackNameSearch)
-                    .Take(10)
-                    .Select(match => match.Value)
-                    .OrderByDescending(match => match.RequestCount);
-            }
+            var results = MatchRepository.GetTopTenTracks();
 
             if (json)
             {
@@ -59,7 +49,7 @@ namespace WeshAppCloudAPI.Controllers
             {
                 string htmlString = 
                     "<html><head><title>Top ten tracks</title></head><body><ul><li>" + 
-                    string.Join("</li><li>", results.Select(m => m.ArtistNameSearch + " - " + m.TrackNameSearch + " #" + m.RequestCount)) + 
+                    string.Join("</li><li>", results.Select(m => m.ArtistNameSearch + " - " + m.TrackNameSearch + " #" + m.RequestCount + "<br><img src=\""+m.AlbumCoverURLResult+"\"/>")) + 
                     "</li></ul></body></html>";
 
                 return Content(htmlString, "text/html");
@@ -69,19 +59,7 @@ namespace WeshAppCloudAPI.Controllers
         //Just like it says on the tin...
         public ActionResult GetTopTenArtists(bool json = false)
         {
-            IEnumerable<AlbumTrackMatch> results = new List<AlbumTrackMatch>();
-
-            if (MatchRepository.Repository.Count > 0)
-            {
-                results = MatchRepository.Repository
-                    .GroupBy(match => match.Value.ArtistNameSearch)
-                    .Select(gmatch => new AlbumTrackMatch
-                    {
-                        ArtistNameSearch = gmatch.First().Value.ArtistNameSearch,
-                        RequestCount = gmatch.Sum(rc => rc.Value.RequestCount)
-                    })
-                    .OrderByDescending(m => m.RequestCount);
-            }
+            var results = MatchRepository.GetTopTenArtists();
 
             if (json)
             {
@@ -91,7 +69,7 @@ namespace WeshAppCloudAPI.Controllers
             {
                 string htmlString = 
                     "<html><head><title>Top ten artists</title></head><body><ul><li>" + 
-                    string.Join("</li><li>", results.Select(m => m.ArtistNameSearch + " #" + m.RequestCount)) + 
+                    string.Join("</li><li>", results.Select(m => m.ArtistNameSearch + " #" + m.RequestCount + "<br><img src=\""+m.AlbumCoverURLResult+"\"/>")) + 
                     "</li></ul></body></html>";
 
                 return Content(htmlString, "text/html");

@@ -26,19 +26,22 @@ namespace WeshAppRdioClient
             embedURL = string.Empty;
 
             Dictionary<string, string> parameters = new Dictionary<string,string>();
-            parameters["query"] = string.Format("{0}", trackName);
             parameters["types"] = string.Format("{0}", "Track");
 
             try
             {
-
-                string jsonResult = _client.Call("search", parameters);
-                if(!string.IsNullOrEmpty(jsonResult))
+                //Try specific search first
+                string query = string.Format("{0}", "\"" + trackName + "\" " + artistName);
+                parameters["query"] = query;
+                if(searchAndParseResult(ref albumImageURL, ref embedURL, parameters))
                 {
-                    JObject response = JObject.Parse(jsonResult);
-                    var match = response["result"]["results"][0];
-                    albumImageURL = (string)match["icon400"];
-                    embedURL = (string)match["embedUrl"];
+                    return true;
+                }
+
+                //General search second
+                parameters["query"] = trackName;
+                if (searchAndParseResult(ref albumImageURL, ref embedURL, parameters))
+                {
                     return true;
                 }
             }
@@ -49,5 +52,25 @@ namespace WeshAppRdioClient
 
             return false;
         }
+
+        private bool searchAndParseResult(ref string albumImageURL, ref string embedURL, Dictionary<string, string> parameters)
+        {
+            string jsonResult = _client.Call("search", parameters);
+            if (!string.IsNullOrEmpty(jsonResult))
+            {
+                JObject response = JObject.Parse(jsonResult);
+                var matchCount = (int)response["result"]["number_results"];
+                if (matchCount > 0)
+                {
+                    var match = response["result"]["results"][0];
+                    albumImageURL = (string)match["icon400"];
+                    embedURL = (string)match["embedUrl"];
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
     }
 }

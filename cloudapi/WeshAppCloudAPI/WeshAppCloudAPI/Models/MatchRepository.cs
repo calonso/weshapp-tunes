@@ -91,5 +91,42 @@ namespace WeshAppCloudAPI.Models
         {
             return string.Format("{0}|{1}", artistName, songName);
         }
+
+        public static IOrderedEnumerable<AlbumTrackMatch> GetTopTenTracks()
+        {
+            IOrderedEnumerable<AlbumTrackMatch> results = null;
+
+            if (MatchRepository.Repository.Count > 0)
+            {
+                results = MatchRepository.Repository
+                    .OrderByDescending(match => match.Value.RequestCount)
+                    .OrderBy(match => match.Value.TrackNameSearch)
+                    .Take(10)
+                    .Select(match => match.Value)
+                    .OrderByDescending(match => match.RequestCount);
+            }
+
+            return results;
+        }
+
+        public static IOrderedEnumerable<AlbumTrackMatch> GetTopTenArtists()
+        {
+            IOrderedEnumerable<AlbumTrackMatch> results = null;
+
+            if (MatchRepository.Repository.Count > 0)
+            {
+                results = MatchRepository.Repository
+                    .GroupBy(match => match.Value.ArtistNameSearch)
+                    .Select(gmatch => new AlbumTrackMatch
+                    {
+                        ArtistNameSearch = gmatch.First().Value.ArtistNameSearch,
+                        RequestCount = gmatch.Sum(rc => rc.Value.RequestCount),
+                        AlbumCoverURLResult = gmatch.First().Value.AlbumCoverURLResult
+                    })
+                    .OrderByDescending(m => m.RequestCount);
+            }
+
+            return results;
+        }
     }
 }
