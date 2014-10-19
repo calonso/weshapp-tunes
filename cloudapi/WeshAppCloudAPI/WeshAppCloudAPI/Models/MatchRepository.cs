@@ -7,27 +7,32 @@ using WeshAppRdioClient;
 
 namespace WeshAppCloudAPI.Models
 {
+    //Repository for album track matches
     public static class MatchRepository
     {
         private static WeshAppRdioClient.WeshAppRdioClient _rdioClient = new WeshAppRdioClient.WeshAppRdioClient();
 
         static MatchRepository() 
         {
-            Repository = new Dictionary<string, AlbumTrackMatch>();
+            Repository = new Dictionary<string, AlbumTrackMatch>(StringComparer.OrdinalIgnoreCase);
         }
 
         public static Dictionary<string, AlbumTrackMatch> Repository;
 
+        //Main entry-point
+        //Input: search by artist name (ex: blur) and song name (ex: coffee and tv)
         public static AlbumTrackMatch handleAlbumMatch(string artistName, string songName)
         {
             string cacheKey = getCacheKey(artistName, songName);
             if (Repository.ContainsKey(cacheKey))
             {
-                return MatchRepository.Repository[cacheKey];
+                var match = MatchRepository.Repository[cacheKey];
+                match.RequestCount++;
+                return match;
             }
             else
             {
-                AlbumTrackMatch apiResult = searchForAlbum(artistName, songName);
+                var apiResult = albumSearchHandler(artistName, songName);
                 if (apiResult != null && !MatchRepository.Repository.ContainsKey(cacheKey))
                 {
                     MatchRepository.Repository[cacheKey] = apiResult;
@@ -35,23 +40,24 @@ namespace WeshAppCloudAPI.Models
                 }
             }
 
-            //TODO - Replace with empty result
-            //return new AlbumTrackMatch();
-            return getSampleSong();
+            return new AlbumTrackMatch();
         }
 
-        private static AlbumTrackMatch searchForAlbum(string artistName, string songName)
+        private static AlbumTrackMatch albumSearchHandler(string artistName, string songName)
         {
-            string albumURL = _rdioClient.getAlbumURL(artistName, songName);
-            if (!string.IsNullOrEmpty(albumURL))
+            string embedURL;
+            string albumImageURL;
+            
+            if (_rdioClient.getAlbumURL(artistName, songName, out albumImageURL, out embedURL))
             {
-                string base64Image = getBase64ImageFromURL(albumURL);
+                string base64Image = getBase64ImageFromURL(albumImageURL);
                 return new AlbumTrackMatch
                 {
                     ArtistNameSearch = artistName,
                     TrackNameSearch = songName,
                     AlbumCoverBase64Result = base64Image,
-                    AlbumCoverURLResult = albumURL
+                    AlbumCoverURLResult = albumImageURL,
+                    RdioEmbedURL = embedURL
                 };
             }
             else
@@ -59,8 +65,6 @@ namespace WeshAppCloudAPI.Models
                 return null;
             }
         }
-
-
 
         private static string getBase64ImageFromURL(string albumURL)
         {
@@ -88,17 +92,41 @@ namespace WeshAppCloudAPI.Models
             return string.Format("{0}|{1}", artistName, songName);
         }
 
-        private static AlbumTrackMatch getSampleSong()
+        public static IOrderedEnumerable<AlbumTrackMatch> GetTopTenTracks()
         {
-            byte[] test = System.IO.File.ReadAllBytes("c:\\testimage.jpg");
-            string base64stringTest = Convert.ToBase64String(test);
-            return new AlbumTrackMatch
+            IOrderedEnumerable<AlbumTrackMatch> results = null;
+
+            if (MatchRepository.Repository.Count > 0)
             {
-                ArtistNameSearch = "artist",
-                TrackNameSearch = "song",
-                AlbumCoverURLResult = "http://somethinghere/albumcover.jpg",
-                AlbumCoverBase64Result = base64stringTest//ImageToBase64(i, System.Drawing.Imaging.ImageFormat.Png)
-            };
+                results = MatchRepository.Repository
+                    .OrderByDescending(match => match.Value.RequestCount)
+                    .OrderBy(match => match.Value.TrackNameSearch)
+                    .Take(10)
+                    .Select(match => match.Value)
+                    .OrderByDescending(match => match.RequestCount);
+            }
+
+            return results;
+        }
+
+        public static IOrderedEnumerable<AlbumTrackMatch> GetTopTenArtists()
+        {
+            IOrderedEnumerable<AlbumTrackMatch> results = null;
+
+            if (MatchRepository.Repository.Count > 0)
+            {
+                results = MatchRepository.Repository
+                    .GroupBy(match => match.Value.ArtistNameSearch)
+                    .Select(gmatch => new AlbumTrackMatch
+                    {
+                        ArtistNameSearch = gmatch.First().Value.ArtistNameSearch,
+                        RequestCount = gmatch.Sum(rc => rc.Value.RequestCount),
+                        AlbumCoverURLResult = gmatch.First().Value.AlbumCoverURLResult
+                    })
+                    .OrderByDescending(m => m.RequestCount);
+            }
+
+            return results;
         }
     }
 }
