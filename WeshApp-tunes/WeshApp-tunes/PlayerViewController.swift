@@ -14,7 +14,7 @@ class PlayerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()  
-        println(songTitle!)
+        //println(songTitle!)
 
         // Do any additional setup after loading the view.
     }

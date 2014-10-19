@@ -116,20 +116,26 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
 
               var songList: Array<String> = msg as Array<String>
               
-              
+                  println("Test1")
            if(songList.count > 1){
+               println("Test2")
               var mainQueue = NSOperationQueue.mainQueue()
               mainQueue.addOperationWithBlock() {
               self.delegate!.updateMediaDictionary(songList, peerID: peerID)
                 }
             }else{
             
+              println("Test3")
               println(MediaManager.getURL( songList[0]) )
+            
+                //session.startStreamWithName
+            
+            
             }
             
           
           
-                            //println("Data received \(songList)")
+              
           
            
            
@@ -166,6 +172,9 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
     didReceiveStream stream: NSInputStream!,
     withName streamName: String!,
     fromPeer peerID: MCPeerID!) {
+    
+    
+    
       
   }
   

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B345464019F36C1100DC4689 /* AudioBuffersQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = B345463919F36C1100DC4689 /* AudioBuffersQueue.m */; };
+		B345464119F36C1100DC4689 /* WeshAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = B345463B19F36C1100DC4689 /* WeshAudioBuffer.m */; };
+		B345464219F36C1100DC4689 /* SongInputStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = B345463D19F36C1100DC4689 /* SongInputStreamer.m */; };
+		B345464319F36C1100DC4689 /* SongOutputStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = B345463F19F36C1100DC4689 /* SongOutputStreamer.m */; };
 		B37DE9B219F2A151005F3542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9B119F2A151005F3542 /* AppDelegate.swift */; };
 		B37DE9B519F2A151005F3542 /* WeshApp_tunes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9B319F2A151005F3542 /* WeshApp_tunes.xcdatamodeld */; };
 		B37DE9BA19F2A151005F3542 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B37DE9B819F2A151005F3542 /* Main.storyboard */; };
@@ -32,6 +36,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B345463819F36C1100DC4689 /* AudioBuffersQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioBuffersQueue.h; sourceTree = "<group>"; };
+		B345463919F36C1100DC4689 /* AudioBuffersQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBuffersQueue.m; sourceTree = "<group>"; };
+		B345463A19F36C1100DC4689 /* WeshAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeshAudioBuffer.h; sourceTree = "<group>"; };
+		B345463B19F36C1100DC4689 /* WeshAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeshAudioBuffer.m; sourceTree = "<group>"; };
+		B345463C19F36C1100DC4689 /* SongInputStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongInputStreamer.h; sourceTree = "<group>"; };
+		B345463D19F36C1100DC4689 /* SongInputStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongInputStreamer.m; sourceTree = "<group>"; };
+		B345463E19F36C1100DC4689 /* SongOutputStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongOutputStreamer.h; sourceTree = "<group>"; };
+		B345463F19F36C1100DC4689 /* SongOutputStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongOutputStreamer.m; sourceTree = "<group>"; };
+		B345464419F36C2300DC4689 /* WeshApp-tunes-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeshApp-tunes-Bridging-Header.h"; sourceTree = "<group>"; };
 		B37DE9AC19F2A151005F3542 /* WeshApp-tunes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WeshApp-tunes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37DE9B019F2A151005F3542 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B37DE9B119F2A151005F3542 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +82,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B345463619F36C1100DC4689 /* SongsStreamer */ = {
+			isa = PBXGroup;
+			children = (
+				B345463719F36C1100DC4689 /* AudioBuffersQueue */,
+				B345463C19F36C1100DC4689 /* SongInputStreamer.h */,
+				B345463D19F36C1100DC4689 /* SongInputStreamer.m */,
+				B345463E19F36C1100DC4689 /* SongOutputStreamer.h */,
+				B345463F19F36C1100DC4689 /* SongOutputStreamer.m */,
+			);
+			path = SongsStreamer;
+			sourceTree = "<group>";
+		};
+		B345463719F36C1100DC4689 /* AudioBuffersQueue */ = {
+			isa = PBXGroup;
+			children = (
+				B345463819F36C1100DC4689 /* AudioBuffersQueue.h */,
+				B345463919F36C1100DC4689 /* AudioBuffersQueue.m */,
+				B345463A19F36C1100DC4689 /* WeshAudioBuffer.h */,
+				B345463B19F36C1100DC4689 /* WeshAudioBuffer.m */,
+			);
+			path = AudioBuffersQueue;
+			sourceTree = "<group>";
+		};
 		B37DE9A319F2A151005F3542 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +127,8 @@
 		B37DE9AE19F2A151005F3542 /* WeshApp-tunes */ = {
 			isa = PBXGroup;
 			children = (
+				B345464419F36C2300DC4689 /* WeshApp-tunes-Bridging-Header.h */,
+				B345463619F36C1100DC4689 /* SongsStreamer */,
 				B37DE9B119F2A151005F3542 /* AppDelegate.swift */,
 				B37DE9D819F2B79A005F3542 /* SongTVC.swift */,
 				B3E6ADC019F31EA8009C2418 /* PlayerViewController.swift */,
@@ -233,10 +271,14 @@
 			files = (
 				B37DE9D519F2B4DC005F3542 /* MCManager.swift in Sources */,
 				B37DE9B519F2A151005F3542 /* WeshApp_tunes.xcdatamodeld in Sources */,
+				B345464019F36C1100DC4689 /* AudioBuffersQueue.m in Sources */,
 				B37DE9B219F2A151005F3542 /* AppDelegate.swift in Sources */,
 				B3E6ADC119F31EA8009C2418 /* PlayerViewController.swift in Sources */,
 				B37DE9D919F2B79A005F3542 /* SongTVC.swift in Sources */,
+				B345464219F36C1100DC4689 /* SongInputStreamer.m in Sources */,
+				B345464319F36C1100DC4689 /* SongOutputStreamer.m in Sources */,
 				B37DE9DD19F2C7B6005F3542 /* MediaManager.swift in Sources */,
+				B345464119F36C1100DC4689 /* WeshAudioBuffer.m in Sources */,
 				B37DE9DB19F2B9A2005F3542 /* Media.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
