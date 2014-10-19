@@ -105,52 +105,39 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
       
   }
   
+  var oStreamer : SongOutputStreamer?
+  
   func session(     session: MCSession!,
         didReceiveData data: NSData!,
             fromPeer peerID: MCPeerID!) {
-              println("data size \(data.length)")
-          var msg: AnyObject = NSKeyedUnarchiver.unarchiveObjectWithData(data)!
+    println("data size \(data.length)")
+    var msg: AnyObject = NSKeyedUnarchiver.unarchiveObjectWithData(data)!
           
        
-              println( "Array received")
+    println( "Array received")
 
-              var songList: Array<String> = msg as Array<String>
+    var songList: Array<String> = msg as Array<String>
               
-                  println("Test1")
-           if(songList.count > 1){
-               println("Test2")
-              var mainQueue = NSOperationQueue.mainQueue()
-              mainQueue.addOperationWithBlock() {
-              self.delegate!.updateMediaDictionary(songList, peerID: peerID)
-                }
-            }else{
-            
-              println("Test3")
-              println(MediaManager.getURL( songList[0]) )
-            
-                //session.startStreamWithName
-            
-            
-            }
-            
-          
-          
-              
-          
-           
-           
-    
-    /*
-    
-      var dict: Dictionary = [ "data": data, "peerID": peerID ]
-    
-    var mainQueue = NSOperationQueue.mainQueue()
-    mainQueue.addOperationWithBlock() {
-      let notificationCenter = NSNotificationCenter.defaultCenter()
-      
-      notificationCenter.postNotificationName( "MCDidReceiveDataNotification", object: nil, userInfo: dict)
+    if(songList.count > 1){
+      println("Test2")
+      var mainQueue = NSOperationQueue.mainQueue()
+      mainQueue.addOperationWithBlock() {
+        self.delegate!.updateMediaDictionary(songList, peerID: peerID)
       }
-  */
+    } else {
+      let url = MediaManager.getURL( songList[0])
+      
+      var err : NSError?
+      let oStream = session.startStreamWithName("supertransfer-\(NSDate().timeIntervalSince1970)", toPeer: peerID, error: &err)
+      
+      if err != nil {
+        println("ERROR! \(err!.localizedDescription)")
+      } else {
+        dispatch_async(dispatch_get_main_queue(), {
+          self.oStreamer = SongOutputStreamer.streamSong(url, to: oStream)
+        });
+      }
+    }
   }
 
   func session(                          session: MCSession!,
@@ -168,21 +155,18 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
       
   }
   
+  var iStreamer : SongInputStreamer?
+  
   func session(     session: MCSession!,
     didReceiveStream stream: NSInputStream!,
     withName streamName: String!,
     fromPeer peerID: MCPeerID!) {
-    
-    
-    
-      
+    println("Received stream");
+    dispatch_async(dispatch_get_main_queue(), {
+      self.iStreamer = SongInputStreamer.playSongFrom(stream)
+      //self.iStreamer = SongInputStreamer.playSongFrom(NSInputStream(URL: NSBundle.mainBundle().URLForResource("sample", withExtension: "mp3")!))
+    });
   }
-  
-  
-  
-  
-  
-  
   
   /////////////////// AVERTISE ////////////////////////////
   func startAdvertising(shouldAdvertise: Bool, serviceType: String = "music"){
@@ -245,6 +229,10 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
   func browser( browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!){
     println("peer \(peerID?.displayName) lost")
     
+  }
+  
+  deinit {
+    println("DEINIT")
   }
   
   

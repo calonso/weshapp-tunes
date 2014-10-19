@@ -6,6 +6,7 @@ class Media {
  var songName: String?
  //let albumArtwork: ImageURL?
  var artist: String?
+  
  var owners: [MCPeerID]?;
 
 

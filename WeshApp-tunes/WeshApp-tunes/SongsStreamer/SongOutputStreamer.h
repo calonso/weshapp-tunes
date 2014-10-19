@@ -10,7 +10,8 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface SongOutputStreamer : NSObject <NSStreamDelegate> {
-  AVAssetReaderTrackOutput *assetOutput;
+  AVAssetReaderOutput *trackOutput;
+  AVAssetReader *assetReader;
 }
 
 + (SongOutputStreamer *) streamSong:(NSURL *)url to:(NSOutputStream *)oStream;

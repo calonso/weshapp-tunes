@@ -46,6 +46,10 @@ void AudioQueueOutputCbk(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferR
   inStream.delegate = self;
   [inStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
   [inStream open];
+  NSLog(@"Trying pull data...");
+  /*if([inStream hasBytesAvailable]) {
+    [inStream.delegate stream:inStream handleEvent:NSStreamEventHasBytesAvailable];
+  }*/
 }
 
 - (void) stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode {
@@ -130,7 +134,6 @@ void AudioQueueOutputCbk(void *inUserData, AudioQueueRef inAQ, AudioQueueBufferR
 }
 
 - (void)didReceivePackets:(const void *)packets packetDescriptions:(AudioStreamPacketDescription *)packetDescriptions numberOfPackets:(UInt32)numberOfPackets numberOfBytes:(UInt32)numberOfBytes {
-  
   if (packetDescriptions) {
     for (NSUInteger i = 0; i < numberOfPackets; i++) {
       SInt64 packetOffset = packetDescriptions[i].mStartOffset;

@@ -18,13 +18,27 @@
 }
 
 - (void) loadSongAt:(NSURL *)url {
-  AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options: nil];
+  AVAsset *asset = [AVAsset assetWithURL:url];
   NSError *error = nil;
-  AVAssetReader *assetReader = [AVAssetReader assetReaderWithAsset:asset error:&error];
-  assetOutput = [[AVAssetReaderTrackOutput alloc] initWithTrack: asset.tracks[0] outputSettings: nil];
+  assetReader = [AVAssetReader assetReaderWithAsset:asset error:&error];
   
-  [assetReader addOutput:assetOutput];
-  [assetReader startReading];
+  if (error) {
+    NSLog(@"Error creating reader! %@", error.localizedDescription);
+  }
+  AVAsset *localAsset = assetReader.asset;
+  
+  AVAssetTrack *audioTrack = [[localAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0];
+  
+  trackOutput = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:audioTrack outputSettings:nil];
+  trackOutput.alwaysCopiesSampleData = NO;
+  
+  if ([assetReader canAddOutput:trackOutput]) {
+    [assetReader addOutput:trackOutput];
+    [assetReader startReading];
+    NSLog(@"Read!");
+  } else {
+    NSLog(@"Not Reading!");
+  }
 }
 
 - (void) streamTo:(NSOutputStream *)oStream {
@@ -32,6 +46,7 @@
   self.oStream.delegate = self;
   [self.oStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
   [self.oStream open];
+  NSLog(@"Opening output stream...");
 }
 
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode {
@@ -68,6 +83,7 @@
 }
 
 - (void)pushData {
+/*
   CMSampleBufferRef sampleBuffer = [assetOutput copyNextSampleBuffer];
   
   CMBlockBufferRef blockBuffer;
@@ -78,11 +94,52 @@
   for (NSUInteger i = 0; i < audioBufferList.mNumberBuffers; i++) {
     AudioBuffer audioBuffer = audioBufferList.mBuffers[i];
     NSLog(@"write!");
-    [self.oStream write:audioBuffer.mData maxLength:audioBuffer.mDataByteSize];
+    NSInteger written = [self.oStream write:audioBuffer.mData maxLength:audioBuffer.mDataByteSize];
+    if (written == -1) {
+      NSLog(@"An error happened writing!");
+    } else {
+      NSLog(@"Written %d", (int)written);
+    }
   }
   
   CFRelease(blockBuffer);
   CFRelease(sampleBuffer);
+  [self.oStream close];*/
+  BOOL done = false;
+  
+  while (!done) {
+    CMSampleBufferRef sampleBuffer = [trackOutput copyNextSampleBuffer];
+    
+    if (sampleBuffer) {
+      
+      //READ
+      CMBlockBufferRef blockBuffer;
+      AudioBufferList audioBufferList;
+      
+      CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, NULL, &audioBufferList, sizeof(AudioBufferList), NULL, NULL, kCMSampleBufferFlag_AudioBufferList_Assure16ByteAlignment, &blockBuffer);
+      
+      for (NSUInteger i = 0; i < audioBufferList.mNumberBuffers; i++) {
+        AudioBuffer audioBuffer = audioBufferList.mBuffers[i];
+        NSLog(@"write!");
+        NSInteger written = [self.oStream write:audioBuffer.mData maxLength:audioBuffer.mDataByteSize];
+        if (written == -1) {
+          NSLog(@"An error happened writing!");
+        } else {
+          NSLog(@"Written %d", (int)written);
+        }
+      }
+      
+      CFRelease(sampleBuffer);
+      sampleBuffer = NULL;
+    } else {
+      if (assetReader.status == AVAssetReaderStatusFailed) {
+        NSLog(@"Error reading! %@", assetReader.error.localizedDescription);
+      } else {
+        done = true;
+      }
+    }
+  }
+  
   [self.oStream close];
 }
 
