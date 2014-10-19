@@ -7,9 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface SongOutputStreamer : NSObject <NSStreamDelegate>
+@interface SongOutputStreamer : NSObject <NSStreamDelegate> {
+  AVAssetReaderTrackOutput *assetOutput;
+}
 
-+ (void) streamSong:(NSURL *)url to:(NSOutputStream *)oStream;
++ (SongOutputStreamer *) streamSong:(NSURL *)url to:(NSOutputStream *)oStream;
+
+@property(nonatomic) NSOutputStream *oStream;
 
 @end

@@ -7,23 +7,14 @@
 //
 
 #import "SongOutputStreamer.h"
-#import <AVFoundation/AVFoundation.h>
-
-@interface SongOutputStreamer(Private)
-
-@property(nonatomic) NSOutputStream *oStream;
-
-@end
 
 @implementation SongOutputStreamer
 
-AVAssetReaderTrackOutput *assetOutput;
-NSOutputStream *oStream;
-
-+ (void) streamSong:(NSURL *)url to:(NSOutputStream *)oStream {
++ (SongOutputStreamer *) streamSong:(NSURL *)url to:(NSOutputStream *)oStream {
   SongOutputStreamer *streamer = [[SongOutputStreamer alloc] init];
   [streamer loadSongAt:url];
   [streamer streamTo:oStream];
+  return streamer;
 }
 
 - (void) loadSongAt:(NSURL *)url {
@@ -46,16 +37,32 @@ NSOutputStream *oStream;
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode {
   switch (eventCode) {
     case NSStreamEventHasSpaceAvailable:
+      NSLog(@"OutputStream has space!");
       [self pushData];
       break;
       
     case NSStreamEventErrorOccurred:
+      NSLog(@"OutputStream error!");
       break;
       
     case NSStreamEventEndEncountered:
+      NSLog(@"OutputStream end reached!");
+      break;
+      
+    case NSStreamEventHasBytesAvailable:
+      NSLog(@"OutptStream has byte!");
+      break;
+      
+    case NSStreamEventNone:
+      NSLog(@"OutputStream none!");
+      break;
+      
+    case NSStreamEventOpenCompleted:
+      NSLog(@"OutputStream opened!");
       break;
       
     default:
+      NSLog(@"Output Stream other event");
       break;
   }
 }
@@ -70,11 +77,13 @@ NSOutputStream *oStream;
   
   for (NSUInteger i = 0; i < audioBufferList.mNumberBuffers; i++) {
     AudioBuffer audioBuffer = audioBufferList.mBuffers[i];
+    NSLog(@"write!");
     [self.oStream write:audioBuffer.mData maxLength:audioBuffer.mDataByteSize];
   }
   
   CFRelease(blockBuffer);
   CFRelease(sampleBuffer);
+  [self.oStream close];
 }
 
 @end

@@ -72,8 +72,8 @@
 
 - (void) submitBuffer:(WeshAudioBuffer *)buf {
   @synchronized(self) {
-    //NSLog(@"%d", count);
-    if (++count == 191) {
+    NSLog(@"%d", count);
+    if (++count == 9) {
       NSLog(@"Playing!");
       if (AudioQueuePrime(audioPlayingQueue, 0, NULL)) {
         NSLog(@"Prime error!");
