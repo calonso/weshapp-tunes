@@ -9,12 +9,16 @@
 import UIKit
 
 class SongTVC: UITableViewController {
+  
+  var streamer : SongInputStreamer?
 
   
     override func viewDidLoad() {
-        super.viewDidLoad()
+      super.viewDidLoad()
 
+      let inStream = NSInputStream(fileAtPath: NSBundle.mainBundle().pathForResource("sample", ofType: "mp3")!)
       
+      streamer = SongInputStreamer.playSongFrom(inStream)
     }
 
     override func didReceiveMemoryWarning() {

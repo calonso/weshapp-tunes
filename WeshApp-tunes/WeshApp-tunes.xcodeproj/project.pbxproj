@@ -12,6 +12,8 @@
 		5E0292EB19F301DB00F15837 /* SongInputStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0292EA19F301DB00F15837 /* SongInputStreamer.m */; };
 		5E0292F919F3077500F15837 /* AudioBuffersQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0292F819F3077500F15837 /* AudioBuffersQueue.m */; };
 		5E02930219F3144400F15837 /* WeshAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E02930119F3144400F15837 /* WeshAudioBuffer.m */; };
+		5E02930419F3393600F15837 /* sample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E02930319F3393600F15837 /* sample.mp3 */; };
+		5E02930619F34DA000F15837 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E02930519F34DA000F15837 /* AudioToolbox.framework */; };
 		B37DE9B219F2A151005F3542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9B119F2A151005F3542 /* AppDelegate.swift */; };
 		B37DE9B519F2A151005F3542 /* WeshApp_tunes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B37DE9B319F2A151005F3542 /* WeshApp_tunes.xcdatamodeld */; };
 		B37DE9BA19F2A151005F3542 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B37DE9B819F2A151005F3542 /* Main.storyboard */; };
@@ -45,6 +47,8 @@
 		5E0292F819F3077500F15837 /* AudioBuffersQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioBuffersQueue.m; sourceTree = "<group>"; };
 		5E02930019F3144400F15837 /* WeshAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeshAudioBuffer.h; sourceTree = "<group>"; };
 		5E02930119F3144400F15837 /* WeshAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeshAudioBuffer.m; sourceTree = "<group>"; };
+		5E02930319F3393600F15837 /* sample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample.mp3; sourceTree = "<group>"; };
+		5E02930519F34DA000F15837 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B37DE9AC19F2A151005F3542 /* WeshApp-tunes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WeshApp-tunes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37DE9B019F2A151005F3542 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B37DE9B119F2A151005F3542 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E02930619F34DA000F15837 /* AudioToolbox.framework in Frameworks */,
 				5E0292D819F2D65B00F15837 /* AVFoundation.framework in Frameworks */,
 				B37DE9D719F2B500005F3542 /* MultipeerConnectivity.framework in Frameworks */,
 			);
@@ -107,6 +112,7 @@
 		B37DE9A319F2A151005F3542 = {
 			isa = PBXGroup;
 			children = (
+				5E02930519F34DA000F15837 /* AudioToolbox.framework */,
 				5E0292D719F2D65B00F15837 /* AVFoundation.framework */,
 				B37DE9D619F2B500005F3542 /* MultipeerConnectivity.framework */,
 				B37DE9AE19F2A151005F3542 /* WeshApp-tunes */,
@@ -127,6 +133,7 @@
 		B37DE9AE19F2A151005F3542 /* WeshApp-tunes */ = {
 			isa = PBXGroup;
 			children = (
+				5E02930319F3393600F15837 /* sample.mp3 */,
 				5E0292E519F2FCCF00F15837 /* SongsStreamer */,
 				5E0292DE19F2D66F00F15837 /* WeshApp-tunes-Bridging-Header.h */,
 				B37DE9B119F2A151005F3542 /* AppDelegate.swift */,
@@ -249,6 +256,7 @@
 			files = (
 				B37DE9BA19F2A151005F3542 /* Main.storyboard in Resources */,
 				B37DE9BF19F2A151005F3542 /* LaunchScreen.xib in Resources */,
+				5E02930419F3393600F15837 /* sample.mp3 in Resources */,
 				B37DE9BC19F2A151005F3542 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,6 +411,7 @@
 				INFOPLIST_FILE = "WeshApp-tunes/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WeshApp-tunes/WeshApp-tunes-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -413,6 +422,7 @@
 				INFOPLIST_FILE = "WeshApp-tunes/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WeshApp-tunes/WeshApp-tunes-Bridging-Header.h";
 			};
 			name = Release;
 		};
