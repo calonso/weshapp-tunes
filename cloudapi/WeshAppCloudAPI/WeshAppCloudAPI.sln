@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeshAppCloudAPI", "WeshAppCloudAPI\WeshAppCloudAPI.csproj", "{69EF8BC3-5DF7-4B1F-B4A4-7F2F5797140F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{F00F8252-BD41-4BDB-AF92-FB02B18C16F4}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{71018340-977A-4DEC-A45E-EF53DBAA4EDE}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\WeshAppCloudAPI-WAWS-dev.json = PublishScripts\Configurations\WeshAppCloudAPI-WAWS-dev.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeshAppRdioClient", "WeshAppRdioClient\WeshAppRdioClient.csproj", "{E5199B9C-80F7-4512-BCC7-646AD9AECA19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69EF8BC3-5DF7-4B1F-B4A4-7F2F5797140F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69EF8BC3-5DF7-4B1F-B4A4-7F2F5797140F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69EF8BC3-5DF7-4B1F-B4A4-7F2F5797140F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69EF8BC3-5DF7-4B1F-B4A4-7F2F5797140F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5199B9C-80F7-4512-BCC7-646AD9AECA19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5199B9C-80F7-4512-BCC7-646AD9AECA19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5199B9C-80F7-4512-BCC7-646AD9AECA19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5199B9C-80F7-4512-BCC7-646AD9AECA19}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{71018340-977A-4DEC-A45E-EF53DBAA4EDE} = {F00F8252-BD41-4BDB-AF92-FB02B18C16F4}
+	EndGlobalSection
+EndGlobal

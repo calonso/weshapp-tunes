@@ -2,6 +2,8 @@ import UIKit
 import  MultipeerConnectivity
 
 class SongTVC: UITableViewController {
+  
+  var streamer : SongInputStreamer?
 
     var manager: MCManager?
     var mediaDict: Dictionary <String, Media>?
@@ -10,6 +12,7 @@ class SongTVC: UITableViewController {
   
     override func viewDidLoad() {
       super.viewDidLoad()
+
       mediaDict = Dictionary()
       topTen = []
       popDict = Dictionary()
@@ -51,6 +54,7 @@ class SongTVC: UITableViewController {
     var mainQueue = NSOperationQueue.mainQueue()
     mainQueue.addOperationWithBlock() {
       self.tableView.reloadData()
+
     }
     
     let keyArray: [String] = Array(mediaDict!.keys)
