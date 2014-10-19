@@ -10,16 +10,19 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface WeshAudioBuffer : NSObject {
-  AudioQueueBufferRef audioQueueBuffer;
   UInt32 fillLevel;
-  NSInteger numberOfPacketDescriptions;
+  UInt32 numberOfPacketDescriptions;
   AudioStreamPacketDescription *packetDescriptions;
 }
 
 @property BOOL submitted;
+@property (setter=setAudioQueueBuffer:) AudioQueueBufferRef audioQueueBuffer;
 
+- (instancetype) initWithAudioQueue:(AudioQueueRef)audioQueue;
 - (NSInteger) addData:(const void *)data length:(UInt32)length;
 - (BOOL) addData:(const void *)data length:(UInt32)length packetDescription:(AudioStreamPacketDescription)packetDescription;
 - (BOOL) full;
+- (void) submitTo:(AudioQueueRef)audioQueue;
+- (void) free;
 
 @end

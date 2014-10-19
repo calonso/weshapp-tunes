@@ -12,11 +12,13 @@
 
 @interface SongInputStreamer : NSObject <NSStreamDelegate> {
   AudioFileStreamID audioFileStreamID;
-  AudioStreamBasicDescription basicDescription;
   AudioQueueRef audioQueue;
   BOOL discontinuous;
-  AudioBuffersQueue *buffersQueue;
   NSInputStream *inStream;
 }
+
+@property(nonatomic) AudioBuffersQueue *buffersQueue;
+
++ (SongInputStreamer *) playSongFrom:(NSInputStream *)inStream;
 
 @end

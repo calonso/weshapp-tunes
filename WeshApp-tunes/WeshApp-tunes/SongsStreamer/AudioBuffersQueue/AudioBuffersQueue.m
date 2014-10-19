@@ -11,26 +11,28 @@
 
 @implementation AudioBuffersQueue
 
-+ (AudioBuffersQueue *) queue {
-  return [[AudioBuffersQueue alloc] init];
++ (AudioBuffersQueue *) queueForAudioQueue:(AudioQueueRef)audioQueue {
+  return [[AudioBuffersQueue alloc] initWithAudioQueue:audioQueue];
 }
 
-- (instancetype) init {
+- (instancetype) initWithAudioQueue:(AudioQueueRef)audioQueue {
   if (self = [super init]) {
+    audioPlayingQueue = audioQueue;
     queue = [NSMutableArray arrayWithCapacity:3];
     for (int i = 0; i < 3; ++i) {
-      queue[i] = [[WeshAudioBuffer alloc] init];
+      [queue addObject:[[WeshAudioBuffer alloc] initWithAudioQueue:audioPlayingQueue]];
     }
     currentBuffer = 0;
+    count = 0;
   }
   return self;
 }
 
 - (WeshAudioBuffer *) nextFreeBuffer {
-  if ([queue[currentBuffer] full] || [queue[currentBuffer] submitted]) {
-    currentBuffer += 1;
-    if (currentBuffer == [queue count]) {
-      currentBuffer = 0;
+  @synchronized(self) {
+    if ([queue[currentBuffer] full] || [queue[currentBuffer] submitted]) {
+      currentBuffer = [queue count];
+      [queue addObject:[[WeshAudioBuffer alloc] initWithAudioQueue:audioPlayingQueue]];
     }
   }
   return queue[currentBuffer];
@@ -40,10 +42,10 @@
   WeshAudioBuffer *buf = [self nextFreeBuffer];
   UInt32 leftovers = (UInt32)[buf addData:data length:length];
   if (leftovers != 0) {
-    // Submit buf
+    [self submitBuffer:buf];
     [self addData:(const void *)(data + length - leftovers) length:leftovers];
   } else if([buf full]) {
-    // Submit buf
+    [self submitBuffer:buf];
   }
 }
 
@@ -51,11 +53,36 @@
   WeshAudioBuffer *buf = [self nextFreeBuffer];
   if ([buf addData:data length:length packetDescription:packetDesc]) {
     if ([buf full]) {
-      // Submit buf
+      [self submitBuffer:buf];
     }
   } else {
-    // Submit buf
+    [self submitBuffer:buf];
     [self addData:data length:length packetDescription:packetDesc];
+  }
+}
+
+- (void) freeBuffer:(AudioQueueBufferRef)inBuffer {
+  for (WeshAudioBuffer *buf in queue) {
+    if (buf.audioQueueBuffer == inBuffer) {
+      [buf free];
+      break;
+    }
+  }
+}
+
+- (void) submitBuffer:(WeshAudioBuffer *)buf {
+  @synchronized(self) {
+    //NSLog(@"%d", count);
+    if (++count == 191) {
+      NSLog(@"Playing!");
+      if (AudioQueuePrime(audioPlayingQueue, 0, NULL)) {
+        NSLog(@"Prime error!");
+      }
+      if (AudioQueueStart(audioPlayingQueue, NULL)) {
+        NSLog(@"Start error!");
+      }
+    }
+    [buf submitTo:audioPlayingQueue];
   }
 }
 

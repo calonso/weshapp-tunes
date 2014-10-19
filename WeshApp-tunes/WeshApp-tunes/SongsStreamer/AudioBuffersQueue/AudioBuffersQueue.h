@@ -12,10 +12,13 @@
 @interface AudioBuffersQueue : NSObject {
   NSMutableArray *queue;
   NSInteger currentBuffer;
+  AudioQueueRef audioPlayingQueue;
+  NSInteger count;
 }
 
-+ (AudioBuffersQueue *) queue;
++ (AudioBuffersQueue *) queueForAudioQueue:(AudioQueueRef)audioQueue;
 - (void) addData:(const void *)data length:(UInt32)length;
 - (void) addData:(const void *)data length:(UInt32)length packetDescription:(AudioStreamPacketDescription)packetDesc;
+- (void) freeBuffer:(AudioQueueBufferRef)inBuffer;
 
 @end

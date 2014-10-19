@@ -10,4 +10,6 @@
 
 @interface SongOutputStreamer : NSObject <NSStreamDelegate>
 
++ (void) streamSong:(NSURL *)url to:(NSOutputStream *)oStream;
+
 @end

@@ -13,11 +13,15 @@ static UInt32 kMaxPacketDescriptions = 512;
 
 @implementation WeshAudioBuffer
 
-- (instancetype) init:(AudioQueueRef)audioQueue {
+- (instancetype) initWithAudioQueue:(AudioQueueRef)audioQueue {
   if (self = [super init]) {
-    AudioQueueAllocateBuffer(audioQueue, kBufferSize, &audioQueueBuffer);
+    OSStatus err = AudioQueueAllocateBuffer(audioQueue, kBufferSize, &_audioQueueBuffer);
+    if (err) {
+      NSLog(@"In error");
+    }
     fillLevel = 0;
     self.submitted = false;
+    packetDescriptions = malloc(sizeof(AudioStreamPacketDescription) * kMaxPacketDescriptions);
   }
   return self;
 }
@@ -25,13 +29,13 @@ static UInt32 kMaxPacketDescriptions = 512;
 - (NSInteger) addData:(const void *)data length:(UInt32)length {
   if (fillLevel + length <= kBufferSize) {
     // Chunk fits entirely in the buffer
-    memcpy((char *)(audioQueueBuffer->mAudioData + fillLevel), (const char *)data, length);
+    memcpy((char *)(self.audioQueueBuffer->mAudioData + fillLevel), (const char *)data, length);
     fillLevel += length;
     return 0;
   } else {
     // Chunk doesn't fit in the buffer
     NSUInteger bytesToCopy = kBufferSize - fillLevel;
-    memcpy((char *)(audioQueueBuffer->mAudioData + fillLevel), (const char *)data, bytesToCopy);
+    memcpy((char *)(self.audioQueueBuffer->mAudioData + fillLevel), (const char *)data, bytesToCopy);
     fillLevel = kBufferSize;
     return length - bytesToCopy;
   }
@@ -41,8 +45,7 @@ static UInt32 kMaxPacketDescriptions = 512;
   if (fillLevel + packetDescription.mDataByteSize > kBufferSize || numberOfPacketDescriptions == kMaxPacketDescriptions) {
     return NO;
   }
-  
-  memcpy((char *)(audioQueueBuffer->mAudioData + fillLevel), (const char *)(data + packetDescription.mStartOffset), packetDescription.mDataByteSize);
+  memcpy((char *)(self.audioQueueBuffer->mAudioData + fillLevel), (const char *)(data + packetDescription.mStartOffset), packetDescription.mDataByteSize);
   
   packetDescriptions[numberOfPacketDescriptions] = packetDescription;
   packetDescriptions[numberOfPacketDescriptions].mStartOffset = fillLevel;
@@ -55,6 +58,19 @@ static UInt32 kMaxPacketDescriptions = 512;
 
 - (BOOL) full {
   return fillLevel == kBufferSize;
+}
+
+- (void) submitTo:(AudioQueueRef)audioQueue {
+  self.submitted = true;
+  self.audioQueueBuffer->mAudioDataByteSize = fillLevel;
+  if(AudioQueueEnqueueBuffer(audioQueue, self.audioQueueBuffer, numberOfPacketDescriptions, packetDescriptions)) {
+    NSLog(@"Error enqueuing!");
+  }
+}
+
+- (void) free {
+  fillLevel = 0;
+  self.submitted = false;
 }
 
 @end
