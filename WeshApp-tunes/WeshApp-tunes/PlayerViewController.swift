@@ -10,11 +10,11 @@ import UIKit
 
 class PlayerViewController: UIViewController {
 
-    @IBOutlet weak var SongTitle: UILabel!
+  var songTitle:String?
 
-  
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()  
+        println(songTitle!)
 
         // Do any additional setup after loading the view.
     }

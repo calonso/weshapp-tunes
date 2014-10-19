@@ -3,9 +3,9 @@ import MultipeerConnectivity
 
 class Media {
   
- let songName: String?
+ var songName: String?
  //let albumArtwork: ImageURL?
- let artist: String?
+ var artist: String?
  var owners: [MCPeerID]?;
 
 

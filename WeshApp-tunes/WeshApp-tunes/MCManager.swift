@@ -33,7 +33,7 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
     var error : NSError?
     var success = self.session?.sendData(data,
                                       toPeers: self.session?.connectedPeers,
-                                     withMode: MCSessionSendDataMode.Reliable,
+                                     withMode: MCSessionSendDataMode.Unreliable,
                                         error: &error)
     
     
@@ -45,13 +45,14 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
  /*
   * Send a Selected Song name to Peer
   */
-  func sendSong(sng: String, peerID: MCPeerID){
-    
-    var data = sng.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+  func sendSong(sng: Array<String>, peerID: MCPeerID){
+  
+    println("Message is \(sng) and  \(peerID.displayName)")
+    var data: NSData = NSKeyedArchiver.archivedDataWithRootObject(sng)
     var error : NSError?
     var success = self.session?.sendData(data,
                                         toPeers: [peerID],
-                                       withMode: MCSessionSendDataMode.Reliable,
+                                       withMode: MCSessionSendDataMode.Unreliable,
                                           error: &error)
     if error != nil {
       print("Error sending data: \(error?.localizedDescription)")
@@ -107,14 +108,31 @@ class MCManager: NSObject, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate,
   func session(     session: MCSession!,
         didReceiveData data: NSData!,
             fromPeer peerID: MCPeerID!) {
- 
+              println("data size \(data.length)")
           var msg: AnyObject = NSKeyedUnarchiver.unarchiveObjectWithData(data)!
-          var songList: Array<String> = msg as Array<String>
-                  //println("Data received \(songList)")
-           var mainQueue = NSOperationQueue.mainQueue()
-          mainQueue.addOperationWithBlock() {
-                self.delegate!.updateMediaDictionary(songList, peerID: peerID)
-          }
+          
+       
+              println( "Array received")
+
+              var songList: Array<String> = msg as Array<String>
+              
+              
+           if(songList.count > 1){
+              var mainQueue = NSOperationQueue.mainQueue()
+              mainQueue.addOperationWithBlock() {
+              self.delegate!.updateMediaDictionary(songList, peerID: peerID)
+                }
+            }else{
+            
+              println(MediaManager.getURL( songList[0]) )
+            }
+            
+          
+          
+                            //println("Data received \(songList)")
+          
+           
+           
     
     /*
     

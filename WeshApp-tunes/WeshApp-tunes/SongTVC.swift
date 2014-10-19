@@ -22,29 +22,41 @@ class SongTVC: UITableViewController {
   
   func updateMediaDictionary(SongList: [String], peerID: MCPeerID){
     for sng in SongList{
+      println(sng)
+      let mediaArray: Array<String> = sng.componentsSeparatedByString("&")
+      let songTitle = mediaArray[0]
       
-      if let media: Media = mediaDict![sng]{
+      
+      if let media: Media = mediaDict![songTitle]{
+      
         media.appendToOwner(peerID)
+        if(mediaArray.count>1){
+          media.artist = mediaArray[1]
+       
+        }
+      
+      popDict![songTitle] =  popDict![sng]! + 1
       }else{
-       mediaDict![sng] = Media(songName: sng, owner: peerID)
+        
+        
+       var media = Media(songName: songTitle, owner: peerID)
+        if(mediaArray.count>1){
+          media.artist = mediaArray[1]
+        
+        }
+       popDict![songTitle] =  1
       }
-      popDict![sng] = mediaDict![sng]!.getPopularity()
+    
    }
-    println(mediaDict!.count)
     var mainQueue = NSOperationQueue.mainQueue()
     mainQueue.addOperationWithBlock() {
       self.tableView.reloadData()
     }
     
     let keyArray: [String] = Array(mediaDict!.keys)
-    let media = mediaDict![keyArray[0]]
     let sortedArray = sortByPopularity(popDict!)
-    //topTen = Array(sortedArray[0...(sortedArray.count-1)*0.1])
-    topTen = Array(sortedArray[0...9]).map{
-      (m: String) in
-       m.componentsSeparatedByString("&")[0]
-      }
-    }
+    topTen = Array(sortedArray[0...9])
+  }
   
   
 
@@ -90,12 +102,21 @@ class SongTVC: UITableViewController {
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
     let index = tableView.indexPathForSelectedRow()
-   if segue.identifier == "toPlay" {
-     let vc = segue.destinationViewController as PlayerViewController
+      if segue.identifier == "toPlay" {
+        let vc = segue.destinationViewController as PlayerViewController
      
-      vc.SongTitle.text =   topTen![index!.row]
-      //manager!.sendSong(, peerID: <#MCPeerID#>)
+        let songTitle = topTen![index!.row]
+        vc.songTitle = songTitle
       
+        if let m = mediaDict![songTitle]?{
+         // println(m.artist)
+          
+    }else{
+        //println("\(songTitle) not found")
+    }
+        
+          //manager!.sendSong( [songTitle], peerID:m!.owners![0])
+    
       
       
     }
